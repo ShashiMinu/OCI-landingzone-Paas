@@ -12,7 +12,7 @@ jobs:
   terraform:
 name: 'Terraform'
 runs-on: ubuntu-latest
-environment: dev   # use lowercase (recommended)
+environment: Dev   # use lowercase (recommended)
 
 defaults:
   run:
