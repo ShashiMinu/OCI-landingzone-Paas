@@ -48,6 +48,8 @@ on:
   push:
     branches: [ "main" ]
   pull_request:
+   paths:
+     - "environments/stage/**"
 
 permissions:
   contents: read
