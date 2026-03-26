@@ -3,7 +3,9 @@ name: 'DEV CI/CD'
 on:
  push:
    branches: [ "main" ]
-  pull_request:
+   paths:
+     - "environments/dev/**"
+  
 
 permissions:
  contents: read
