@@ -86,7 +86,7 @@ jobs:
       run: terraform init
 
     - name: Debug - Show repo structure
-     run: |
+      run: |
           echo "Current directory:"
            pwd
            echo "Listing root:"
