@@ -1,4 +1,4 @@
-name: DEV CI/CD
+name: PROD CI/CD
 
 "on":
 push:
@@ -12,41 +12,33 @@ jobs:
 terraform:
 name: Terraform
 runs-on: ubuntu-latest
-environment: dev
+environment: prod
 
-```
+
 defaults:
   run:
     shell: bash
     working-directory: environments/dev
-
-steps:
-  - name: Checkout
-    uses: actions/checkout@v4
-
-  - name: Setup Terraform
-    uses: hashicorp/setup-terraform@v3
-
     env:
       TF_VAR_tenancy_ocid: ${{ secrets.OCI_TENANCY_OCID }}
       TF_VAR_user_ocid: ${{ secrets.OCI_USER_OCID }}
       TF_VAR_fingerprint: ${{ secrets.OCI_FINGERPRINT }}
       TF_VAR_private_key: ${{ secrets.OCI_PRIVATE_KEY }}
       TF_VAR_region: ${{ secrets.OCI_REGION }}
+    steps:
+     - name: Checkout
+       uses: actions/checkout@v4
+     - name: Setup Terraform
+       uses: hashicorp/setup-terraform@v3
+     - name: Terraform Init
+       run: terraform init
+     - name: Terraform Format
+       run: terraform fmt -check
+     - name: Terraform Validate
+       run: terraform validate
+     - name: Terraform Plan
+       run: terraform plan -var-file="prod.tfvars"
+     - name: Terraform Apply
+       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      run: terraform apply -auto-approve -var-file="prod.tfvars"
 
-  - name: Terraform Init
-    run: terraform init
-
-  - name: Terraform Format
-    run: terraform fmt -check
-
-  - name: Terraform Validate
-    run: terraform validate
-
-  - name: Terraform Plan
-    run: terraform plan -var-file="dev.tfvars"
-
-  - name: Terraform Apply
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    run: terraform apply -auto-approve -var-file="dev.tfvars"
-```
