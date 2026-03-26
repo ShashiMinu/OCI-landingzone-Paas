@@ -93,7 +93,7 @@ jobs:
             ls -l
              echo "Listing environments:"
             ls -l environments || echo "No environments folder"
-            echo "Listing environments/dev:"
+            echo "Listing environments/prod:"
             ls -l environments/prod || echo "No prod folder"
             echo "Listing environments/Prod:"
              ls -l environments/Prod || echo "No prod folder"
