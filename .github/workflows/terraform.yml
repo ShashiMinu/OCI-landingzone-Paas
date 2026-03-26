@@ -1,24 +1,24 @@
 name: PROD CI/CD
 
 "on":
-push:
-branches: ["main"]
-pull_request:
+   push:
+    branches: ["main"]
+   pull_request:
 
 permissions:
 contents: read
 
 jobs:
-terraform:
-name: Terraform
-runs-on: ubuntu-latest
-environment: prod
+  plan :
+   name: plan
+   runs-on: ubuntu-latest
+   environment: prod
 
 
 defaults:
   run:
     shell: bash
-    working-directory: environments/dev
+    working-directory: environments/prod
     
     steps:
      - name: Checkout
