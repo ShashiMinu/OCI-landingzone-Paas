@@ -53,8 +53,8 @@ permissions:
   contents: read
 
 jobs:
-  terraform:
-    name: 'Terraform'
+  plan:
+    name: 'plan'
     runs-on: ubuntu-latest
     environment: production
 
@@ -91,10 +91,43 @@ jobs:
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
-      run: terraform plan -input=false
+      run: terraform plan -out=tfplan
 
-      # On push to "main", build or change infrastructure according to Terraform configuration files
-      # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
-    - name: Terraform Apply
-      if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
-      run: terraform apply -auto-approve -input=false
+    - name: Upload Plan
+      uses: actions/upload-artifact@v4
+      with:
+          name: tfplan
+          path: tfplan
+ apply:
+    needs: plan
+    runs-on: ubuntu-latest
+    environment: prod   
+    env:
+      TF_VAR_tenancy_ocid: ${{ secrets.TENANCY_OCID }}
+      TF_VAR_user_ocid: ${{ secrets.USER_OCID }}
+      TF_VAR_fingerprint: ${{ secrets.FINGERPRINT }}
+      TF_VAR_region: ${{ secrets.REGION }}
+      AWS_ACCESS_KEY_ID: ${{secrets.ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY:  ${{secrets.SECRET_KEY }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download Plan
+        uses: actions/download-artifact@v4
+        with:
+          name: tfplan
+          path: .
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve tfplan
+     
