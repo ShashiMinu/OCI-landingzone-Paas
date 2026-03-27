@@ -47,8 +47,7 @@ name: 'STAGE CI/CD'
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-   paths:
+    paths:
      - "environments/stage/**"
 
 permissions:
