@@ -4,7 +4,7 @@ terraform {
 
     update_method = "PUT"
 
-    address       = "https://objectstorage.us-ashburn-1.oraclecloud.com/p/VFXyYPJ5__s0xNfZvG9T-Lq_XcuK-VlETJ7vV_Lp4Y9F1SZ0dtW94wZFpvE8C2pi/n/idqjvvuiw1f5/b/CI_CD_stage_state_file/o/terraform.tfstate"
+    address       = "https://objectstorage.us-ashburn-1.oraclecloud.com/p/nVOHpnop24tNfIbAmRXlPyNedjPi_aG5OeOBhDxP3UtKc0T-d0nATVOiH0UJ-dw4/n/idqjvvuiw1f5/b/CI_CD_stage_state_file/o/terraform.tfstate"
   }
 
 }
