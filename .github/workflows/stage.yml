@@ -108,4 +108,4 @@ jobs:
     - name: Terraform Apply
       working-directory: environments/stage
       if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
-      run: terraform apply -auto-approve -input=false
+      run: terraform apply -auto-approve -var-file="stage.tfvars"  -input=false
