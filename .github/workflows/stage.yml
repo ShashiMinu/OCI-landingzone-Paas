@@ -50,6 +50,7 @@ on:
     paths:
      - "environments/stage/**"
      - ".github/workflows/stage.yml"
+    workflow_dispatch:
 
 permissions:
   contents: read
