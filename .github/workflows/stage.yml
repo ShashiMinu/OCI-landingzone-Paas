@@ -49,6 +49,7 @@ on:
     branches: [ "main" ]
     paths:
      - "environments/stage/**"
+     - ".github/workflows/stage.yml"
 
 permissions:
   contents: read
