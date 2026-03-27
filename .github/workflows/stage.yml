@@ -92,6 +92,10 @@ jobs:
     - name: Terraform Init
       working-directory: environments/stage
       run: terraform init
+    # Checks that all Terraform configuration files adhere to a canonical format
+    - name: Terraform Format
+      working-directory: environments/stage
+      run: terraform fmt
 
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
