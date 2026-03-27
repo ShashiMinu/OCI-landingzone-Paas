@@ -40,7 +40,7 @@ jobs:
         uses: aquasecurity/trivy-action@master
         with:
           scan-type: config
-          scan-ref: environments/prod
+          scan-ref: environments/Dev
           exit-code: 0 
 
       - name: Terraform Init
