@@ -36,6 +36,13 @@ jobs:
         with:
           terraform_version: ${{ env.TF_VERSION }}
 
+      - name: Run Trivy IaC Scan
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: config
+          scan-ref: environments/prod
+          exit-code: 0 
+
       - name: Terraform Init
         working-directory: environments/Dev
         run: terraform init
